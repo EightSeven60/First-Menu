@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -10,27 +12,30 @@ public class Save {
     public char player_y = 5;
 
 
-    public static void run() {
+    public static void run() throws FileNotFoundException {
 
         String keystroke = " ";
         int keystrokeInt = 0;
         Scanner scanner = new Scanner(System.in);
+        int i = 0;
 
         do {
             System.out.print("\n\n\n\n\nSAVE FILES\n\n");
             keystroke = " ";
-            //in String-ul 'saves' citeam din filesystem numele fisierelor, le dau de la mine in cazul acesta
             String[] saves = new String[9];
-            saves[0] = "1. my_save";
-            saves[1] = "2. old_save";
-            saves[2] = "3. friend_save";
-            saves[3] = "4. backup_save";
-            saves[4] = "5. Empty_Slot";
-            saves[5] = "6. Empty_Slot";
-            saves[6] = "7. Empty_Slot";
-            saves[7] = "8. Empty_Slot";
-            saves[8] = "9. Empty_Slot";
-            for (int i = 0; i < 9; ++i) {
+            File SaveNames = new File("saves/SaveNames.txt");
+            if (SaveNames.exists() && SaveNames.length() > 0) {
+                Scanner fileScanner = new Scanner(SaveNames);
+                for (i = 0; i < 9 && SaveNames.canRead(); ++i) {
+                    saves[i] = fileScanner.nextLine();
+                }
+            }
+            else {
+                for (i = 0; i < 9; ++i) {
+                    saves[i] = i + ". Empty_Slot";
+                }
+            }
+            for (i = 0; i < 9; ++i) {
                 System.out.println(saves[i]);
             }
             System.out.println("\nPress 'B' to return.");
