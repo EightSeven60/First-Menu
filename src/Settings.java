@@ -171,11 +171,9 @@ public class Settings {
                     font_color_rock_far = Integer.parseInt(scanner.next());
                 }
                 case "p" -> {
-                    System.out.print("Are you sure?\n1. Yes\n2. No, don't load defaults\n");
-                    do {
-                        keystroke = scanner.next();
-                    } while (!Objects.equals(keystroke, "1") && !Objects.equals(keystroke, "2"));
-                    if (Objects.equals(keystroke, "2")) break;
+                    if (!ConfirmationMenu.run("Are you sure you want to load default settings?")) {
+                        break;
+                    }
                     go_up = 119;
                     go_down = 115;
                     go_left = 97;
@@ -191,7 +189,7 @@ public class Settings {
                     font_color_rock_close = 116;
                     font_color_rock_far = 132;
                     System.out.print("Loaded defaults. Press any key to continue.\n");
-                    scanner.next();
+                    System.in.read();
                 }
                 case "b", "B" -> escape = 1;
                 default -> {
